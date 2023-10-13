@@ -40,7 +40,16 @@ class AdminController extends Controller
         ->leftJoin('tb_user AS tu3', 'tu.user_id', '=', 'tu3.updated_by')
         ->leftJoin('tb_instansi AS ti', 'tu.id_instansi', '=', 'ti.instansi_id')
         ->leftJoin('tb_level AS tl', 'tu.id_level', '=', 'tl.level_id')
-        ->select('ti.instansi_jenis', 'ti.instansi_nama', 'ti.instansi_alamat', 'ti.instansi_notelp', 'tl.level_nama', 'tu2.nama AS created_nama', 'tu3.nama AS updated_nama', 'tu.*')
+        ->select(
+            'ti.instansi_jenis',
+            'ti.instansi_nama',
+            'ti.instansi_alamat',
+            'ti.instansi_notelp',
+            'tl.level_nama',
+            'tu2.nama AS created_nama',
+            'tu3.nama AS updated_nama',
+            'tu.*'
+        )
         ->get();
 
         return view('admin.users', compact('data'));
