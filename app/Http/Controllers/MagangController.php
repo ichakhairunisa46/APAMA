@@ -19,7 +19,7 @@ class MagangController extends Controller
 
     public function absensiSave(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function laporanHarian()
@@ -29,7 +29,7 @@ class MagangController extends Controller
 
     public function laporanHarianSave(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function judulMagang()
@@ -39,6 +39,6 @@ class MagangController extends Controller
 
     public function judulMagangSave(Request $request)
     {
-
+        dd($request->all());
     }
 }

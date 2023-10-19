@@ -16,7 +16,7 @@ class PembinaController extends Controller
 
     public function penilaianSave(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function sertifikat()
@@ -26,6 +26,6 @@ class PembinaController extends Controller
 
     public function sertifikatSave(Request $request)
     {
-
+        dd($request->all());
     }
 }

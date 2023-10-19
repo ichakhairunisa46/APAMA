@@ -19,7 +19,7 @@ class AdminController extends Controller
 
     public function instansiSave(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function level()
@@ -31,18 +31,21 @@ class AdminController extends Controller
 
     public function levelSave(Request $request)
     {
-
+        dd($request->all());
     }
 
     public function users()
     {
-        $data = AdminModel::data_user();
+        $get_level    = DB::table('tb_level')->select('level_id AS id', 'level_nama AS text')->get();
+        $get_instansi = DB::table('tb_instansi')->select('instansi_id AS id', 'instansi_nama AS text')->get();
 
-        return view('admin.users', compact('data'));
+        $data         = AdminModel::data_user();
+
+        return view('admin.users', compact('get_level', 'get_instansi', 'data'));
     }
 
-    public function userSave(Request $request)
+    public function usersSave(Request $request)
     {
-
+        dd($request->all());
     }
 }
