@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Model\AdminModel;
+use App\Models\AdminModel;
 
 date_default_timezone_set("Asia/Makassar");
 
@@ -46,6 +46,10 @@ class AdminController extends Controller
 
     public function usersSave(Request $request)
     {
-        dd($request->all());
+        AdminModel::usersSave($request);
+
+        return back()->with('alerts', [
+            ['type' => 'success', 'text' => 'Data Berhasil Disimpan!']
+        ]);
     }
 }

@@ -34,6 +34,8 @@
                         </div>
                         <form method="POST">
                             <div class="modal-body">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="id" value="new">
                                 <div class="form-group">
                                     <label for="no_induk">Nomor Induk</label>
                                     <input type="text" class="form-control" name="no_induk" placeholder="Masukan Nomor Induk">
@@ -43,8 +45,8 @@
                                     <input type="text" class="form-control" name="nama" placeholder="Masukan Nama Lengkap">
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Password</label>
-                                    <input type="password" class="form-control" name="exampleInputPassword1" placeholder="Password">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <label for="id_level">Level</label>
@@ -108,10 +110,10 @@
             </h3>
           </div>
           <div class="card-body table-responsive">
-            <table id="table-detail" class="table table-bordered table-hover text-center">
+            <table id="table-detail" class="table table-bordered table-hover text-center" style="display: 100%">
               <thead>
                 <tr>
-                    <th>User ID</th>
+                    <th>#</th>
                     <th>Nomor Induk</th>
                     <th>Nama</th>
                     <th>Level</th>
@@ -123,15 +125,17 @@
                     <th>Agama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
-                    <th>Created By</th>
+                    {{-- <th>Created By</th>
                     <th>Created At</th>
                     <th>Updated By</th>
-                    <th>Updated At</th>
+                    <th>Updated At</th> --}}
+                    <th>Action</th>
                 </tr>
               </thead>
               <tbody>
                 @foreach ($data as $k => $v)
                 <tr>
+                    <td>{{ $v->user_id }}</td>
                     <td>{{ $v->no_induk }}</td>
                     <td>{{ $v->nama }}</td>
                     <td>{{ $v->level_nama }}</td>
@@ -143,10 +147,15 @@
                     <td>{{ $v->agama }}</td>
                     <td>{{ $v->jenis_kelamin }}</td>
                     <td>{{ $v->alamat }}</td>
-                    <td>{{ $v->created_nama }} ({{ $v->created_by }})</td>
+                    {{-- <td>{{ $v->created_nama }} ({{ $v->created_by }})</td>
                     <td>{{ $v->created_at }}</td>
                     <td>{{ $v->updated_nama }} ({{ $v->updated_by }})</td>
-                    <td>{{ $v->updated_at }}</td>
+                    <td>{{ $v->updated_at }}</td> --}}
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-update-user-{{ $v->user_id }}">
+                            <i class="nav-icon fas fa-edit"></i>
+                        </button>
+                    </td>
 
                 </tr>
                 @endforeach
@@ -165,10 +174,11 @@
                     <th>Agama</th>
                     <th>Jenis Kelamin</th>
                     <th>Alamat</th>
-                    <th>Created By</th>
+                    {{-- <th>Created By</th>
                     <th>Created At</th>
                     <th>Updated By</th>
-                    <th>Updated At</th>
+                    <th>Updated At</th> --}}
+                    <th>Action</th>
                 </tr>
               </tfoot>
             </table>
@@ -212,3 +222,5 @@
     });
 </script>
 @endsection
+
+@include('errors.alert')

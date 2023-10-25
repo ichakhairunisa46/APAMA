@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <link rel="stylesheet" href="/theme/plugins/fontawesome-free/css/all.min.css">
   <link rel="stylesheet" href="/theme/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"/>
   @yield('css')
 </head>
 <body class="hold-transition sidebar-mini">
@@ -175,6 +176,7 @@
 <script src="/theme/plugins/jquery/jquery.min.js"></script>
 <script src="/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="/theme/dist/js/adminlte.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 @yield('js')
 </body>
 </html>

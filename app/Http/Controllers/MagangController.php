@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Model\MagangModel;
+use App\Models\MagangModel;
 
 date_default_timezone_set("Asia/Makassar");
 
