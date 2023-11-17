@@ -14,7 +14,51 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Data Instansi</h3>
+            <h3 class="card-title">Data Instansi
+                &nbsp;
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-create-instansi">
+                    <i class="nav-icon fas fa-plus"></i>
+                </button>
+
+                <div class="modal fade" id="modal-create-instansi">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Buat Instansi</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <form method="POST">
+                            <div class="modal-body">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="id" value="new">
+                                <div class="form-group">
+                                    <label for="instansi_jenis">Jenis Instansi</label>
+                                    <input type="text" class="form-control text-center" name="instansi_jenis" placeholder="Masukan Jenis Instansi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="instansi_nama">Nama Instansi</label>
+                                    <input type="text" class="form-control text-center" name="instansi_nama" placeholder="Masukan Nama Instansi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="instansi_alamat">Alamat Lengkap</label>
+                                    <textarea class="form-control text-center" rows="3" name="instansi_alamat" placeholder="Masukan Alamat Lengkap Instansi"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="instansi_notelp">No Telpon Instansi</label>
+                                    <input type="text" class="form-control text-center" name="instansi_notelp" placeholder="Masukan No Telpon Instansi">
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+            </h3>
           </div>
           <div class="card-body table-responsive">
             <table id="table-detail" class="table table-bordered table-hover text-center">
@@ -25,6 +69,7 @@
                     <th>Nama</th>
                     <th>Alamat</th>
                     <th>No Telpon</th>
+                    <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -35,18 +80,53 @@
                     <td>{{ $v->instansi_nama }}</td>
                     <td>{{ $v->instansi_alamat }}</td>
                     <td>{{ $v->instansi_notelp }}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-update-instansi-{{ $v->instansi_id }}">
+                            <i class="nav-icon fas fa-edit"></i>
+                        </button>
+
+                        <div class="modal fade" id="modal-update-instansi-{{ $v->instansi_id }}">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Edit Instansi {{ $v->instansi_id }}</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form method="POST">
+                                    <div class="modal-body">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $v->instansi_id }}">
+                                        <div class="form-group">
+                                            <label for="instansi_jenis">Jenis Instansi</label>
+                                            <input type="text" class="form-control text-center" name="instansi_jenis" value="{{ $v->instansi_jenis }}" placeholder="Masukan Jenis Instansi">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="instansi_nama">Nama Instansi</label>
+                                            <input type="text" class="form-control text-center" name="instansi_nama" value="{{ $v->instansi_nama }}" placeholder="Masukan Nama Instansi">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="instansi_alamat">Alamat Lengkap</label>
+                                            <textarea class="form-control text-center" rows="3" name="instansi_alamat" placeholder="Masukan Alamat Lengkap Instansi">{{ $v->instansi_alamat }}</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="instansi_notelp">No Telpon Instansi</label>
+                                            <input type="text" class="form-control text-center" name="instansi_notelp" value="{{ $v->instansi_notelp }}" placeholder="Masukan No Telpon Instansi">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                              </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
               </tbody>
-              <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Jenis</th>
-                    <th>Nama</th>
-                    <th>Alamat</th>
-                    <th>No Telpon</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -82,3 +162,5 @@
     });
 </script>
 @endsection
+
+@include('errors.alert')

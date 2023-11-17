@@ -38,15 +38,15 @@
                                 <input type="hidden" name="id" value="new">
                                 <div class="form-group">
                                     <label for="no_induk">Nomor Induk</label>
-                                    <input type="text" class="form-control" name="no_induk" placeholder="Masukan Nomor Induk">
+                                    <input type="text" class="form-control text-center" name="no_induk" placeholder="Masukan Nomor Induk">
                                 </div>
                                 <div class="form-group">
                                     <label for="nama">Nama</label>
-                                    <input type="text" class="form-control" name="nama" placeholder="Masukan Nama Lengkap">
+                                    <input type="text" class="form-control text-center" name="nama" placeholder="Masukan Nama Lengkap">
                                 </div>
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input type="password" class="form-control" name="password" placeholder="Password">
+                                    <input type="password" class="form-control text-center" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
                                     <label for="id_level">Level</label>
@@ -66,37 +66,39 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="no_hp">Nomor Handphone</label>
-                                    <input type="number" class="form-control" name="no_hp" placeholder="Masukan Nomor Handphone">
+                                    <input type="number" class="form-control text-center" name="no_hp" placeholder="Masukan Nomor Handphone">
                                 </div>
                                 <div class="form-group">
                                     <label for="email">Email</label>
-                                    <input type="email" class="form-control" name="email" placeholder="Masukan Email">
+                                    <input type="email" class="form-control text-center" name="email" placeholder="Masukan Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="tempat_lahir">Tempat Lahir</label>
-                                    <input type="text" class="form-control" name="tempat_lahir" placeholder="Masukan Tempat Lahir">
+                                    <input type="text" class="form-control text-center" name="tempat_lahir" placeholder="Masukan Tempat Lahir">
                                 </div>
                                 <div class="form-group">
                                     <label for="tanggal_lahir">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" name="tanggal_lahir">
+                                    <input type="date" class="form-control text-center" name="tanggal_lahir">
                                 </div>
                                 <div class="form-group">
                                     <label for="agama">Agama</label>
                                     <select class="form-control select2bs4" name="agama">
-                                        <option>Islam</option>
-                                        <option>Kristen</option>
+                                        @foreach ($get_agama as $agm)
+                                        <option value="{{ $agm->id }}">{{ $agm->text }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
                                     <select class="form-control select2bs4" name="jenis_kelamin">
-                                        <option>Laki-Laki</option>
-                                        <option>Perempuan</option>
+                                        @foreach ($get_gender as $gdr)
+                                        <option value="{{ $gdr->id }}">{{ $gdr->text }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="alamat">Alamat</label>
-                                    <textarea class="form-control" rows="3" name="alamat" placeholder="Masukan Alamat Lengkap"></textarea>
+                                    <textarea class="form-control text-center" rows="3" name="alamat" placeholder="Masukan Alamat Lengkap"></textarea>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
@@ -144,8 +146,8 @@
                     <td>{{ $v->email }}</td>
                     <td>{{ $v->tempat_lahir }}</td>
                     <td>{{ $v->tanggal_lahir }}</td>
-                    <td>{{ $v->agama }}</td>
-                    <td>{{ $v->jenis_kelamin }}</td>
+                    <td>{{ $v->agama_nama }}</td>
+                    <td>{{ $v->gender_nama }}</td>
                     <td>{{ $v->alamat }}</td>
                     {{-- <td>{{ $v->created_nama }} ({{ $v->created_by }})</td>
                     <td>{{ $v->created_at }}</td>
@@ -155,32 +157,134 @@
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-update-user-{{ $v->user_id }}">
                             <i class="nav-icon fas fa-edit"></i>
                         </button>
+
+                        <div class="modal fade" id="modal-update-user-{{ $v->user_id }}">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h4 class="modal-title">Edit User {{ $v->user_id }}</h4>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form method="POST">
+                                    <div class="modal-body">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="id" value="{{ $v->user_id }}">
+                                        <div class="form-group">
+                                            <label for="no_induk">Nomor Induk</label>
+                                            <input type="text" class="form-control text-center" name="no_induk" value="{{ $v->no_induk }}" placeholder="Masukan Nomor Induk">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nama">Nama</label>
+                                            <input type="text" class="form-control text-center" name="nama" value="{{ $v->nama }}" placeholder="Masukan Nama Lengkap">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="password">Password</label>
+                                            <input type="password" class="form-control text-center" name="password" placeholder="Password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_level">Level</label>
+                                            <select class="form-control select2bs4" name="id_level">
+                                                @foreach ($get_level as $lvl)
+                                                @php
+                                                    if ($lvl->id == $v->id_level)
+                                                    {
+                                                        $selected = 'selected';
+                                                    }
+                                                    else {
+                                                        $selected = '';
+                                                    }
+                                                @endphp
+                                                <option value="{{ $lvl->id }}" {{ $selected }}>{{ $lvl->text }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="id_instansi">Nama Instansi</label>
+                                            <select class="form-control select2bs4" name="id_instansi">
+                                                @foreach ($get_instansi as $ins)
+                                                @php
+                                                    if ($ins->id == $v->id_instansi)
+                                                    {
+                                                        $selected = 'selected';
+                                                    }
+                                                    else {
+                                                        $selected = '';
+                                                    }
+                                                @endphp
+                                                <option value="{{ $ins->id }}" {{ $selected }}>{{ $ins->text }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="no_hp">Nomor Handphone</label>
+                                            <input type="number" class="form-control text-center" name="no_hp" value="{{ $v->no_hp }}" placeholder="Masukan Nomor Handphone">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control text-center" name="email" value="{{ $v->email }}" placeholder="Masukan Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tempat_lahir">Tempat Lahir</label>
+                                            <input type="text" class="form-control text-center" name="tempat_lahir" value="{{ $v->tempat_lahir }}" placeholder="Masukan Tempat Lahir">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="tanggal_lahir">Tanggal Lahir</label>
+                                            <input type="date" class="form-control text-center" name="tanggal_lahir" value="value="{{ $v->tanggal_lahir }}"">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="agama">Agama</label>
+                                            <select class="form-control select2bs4" name="agama">
+                                                @foreach ($get_agama as $agm)
+                                                @php
+                                                    if ($agm->id == $v->agama)
+                                                    {
+                                                        $selected = 'selected';
+                                                    }
+                                                    else {
+                                                        $selected = '';
+                                                    }
+                                                @endphp
+                                                <option value="{{ $agm->id }}" {{ $selected }}>{{ $agm->text }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="jenis_kelamin">Jenis Kelamin</label>
+                                            <select class="form-control select2bs4" name="jenis_kelamin">
+                                                @foreach ($get_gender as $gdr)
+                                                @php
+                                                    if ($gdr->id == $v->jenis_kelamin)
+                                                    {
+                                                        $selected = 'selected';
+                                                    }
+                                                    else {
+                                                        $selected = '';
+                                                    }
+                                                @endphp
+                                                <option value="{{ $gdr->id }}" {{ $selected }}>{{ $gdr->text }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="alamat">Alamat</label>
+                                            <textarea class="form-control text-center" rows="3" name="alamat" placeholder="Masukan Alamat Lengkap">{{ $v->alamat }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                              </div>
+                            </div>
+                        </div>
                     </td>
 
                 </tr>
                 @endforeach
               </tbody>
-              <tfoot>
-                <tr>
-                    <th>User ID</th>
-                    <th>Nomor Induk</th>
-                    <th>Nama</th>
-                    <th>Level</th>
-                    <th>Instansi</th>
-                    <th>Nomor HP</th>
-                    <th>Email</th>
-                    <th>Tempat Lahir</th>
-                    <th>Tanggal Lahir</th>
-                    <th>Agama</th>
-                    <th>Jenis Kelamin</th>
-                    <th>Alamat</th>
-                    {{-- <th>Created By</th>
-                    <th>Created At</th>
-                    <th>Updated By</th>
-                    <th>Updated At</th> --}}
-                    <th>Action</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>

@@ -26,17 +26,44 @@ class AdminModel extends Model
         ->leftJoin('tb_user AS tu3', 'tu.user_id', '=', 'tu3.updated_by')
         ->leftJoin('tb_instansi AS ti', 'tu.id_instansi', '=', 'ti.instansi_id')
         ->leftJoin('tb_level AS tl', 'tu.id_level', '=', 'tl.level_id')
+        ->leftJoin('tb_agama AS ta', 'tu.agama', '=', 'ta.agama_id')
+        ->leftJoin('tb_gender AS tg', 'tu.jenis_kelamin', '=', 'tg.gender_id')
         ->select(
             'ti.instansi_jenis',
             'ti.instansi_nama',
             'ti.instansi_alamat',
             'ti.instansi_notelp',
             'tl.level_nama',
+            'ta.agama_nama',
+            'tg.gender_nama',
             'tu2.nama AS created_nama',
             'tu3.nama AS updated_nama',
             'tu.*'
         )
         ->get();
+    }
+
+    public static function instansiSave($request)
+    {
+        switch ($request->id) {
+            case 'new':
+                    DB::table('tb_instansi')->insert([
+                        'instansi_jenis'  => $request->instansi_jenis,
+                        'instansi_nama'   => $request->instansi_nama,
+                        'instansi_alamat' => $request->instansi_alamat,
+                        'instansi_notelp' => $request->instansi_notelp
+                    ]);
+                break;
+
+            default:
+                    DB::table('tb_instansi')->where('instansi_id', $request->id)->update([
+                        'instansi_jenis'  => $request->instansi_jenis,
+                        'instansi_nama'   => $request->instansi_nama,
+                        'instansi_alamat' => $request->instansi_alamat,
+                        'instansi_notelp' => $request->instansi_notelp
+                    ]);
+                break;
+        }
     }
 
     public static function usersSave($request)

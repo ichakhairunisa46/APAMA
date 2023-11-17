@@ -32,12 +32,6 @@
                 </tr>
                 @endforeach
               </tbody>
-              <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama</th>
-                </tr>
-              </tfoot>
             </table>
           </div>
         </div>
@@ -73,3 +67,5 @@
     });
 </script>
 @endsection
+
+@include('errors.alert')
